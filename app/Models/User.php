@@ -12,9 +12,11 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
+        'username',
+        'national_code',
+        'phone',
         'email',
         'password',
-        'role',
     ];
 
     protected $hidden = [

@@ -1,41 +1,23 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>ورود</title>
-</head>
-<body>
-<h1>ورود</h1>
-
-@if($errors->any())
-    <ul style="color: red;">
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
-
-<form action="{{ route('login.store') }}" method="POST">
+<form method="POST" action="{{ route('login.store') }}">
     @csrf
 
     <div>
-        <label>ایمیل</label>
-        <input type="email" name="email" value="{{ old('email') }}" required>
+        <label>نام کاربری</label>
+        <input type="text" name="username" value="{{ old('username') }}" required autofocus>
+        @error('username') <span style="color:red">{{ $message }}</span> @enderror
     </div>
 
     <div>
         <label>رمز عبور</label>
         <input type="password" name="password" required>
+        @error('password') <span style="color:red">{{ $message }}</span> @enderror
     </div>
 
     <div>
-        <input type="checkbox" name="remember" id="remember">
-        <label for="remember">مرا به خاطر بسپار</label>
+        <label>
+            <input type="checkbox" name="remember"> مرا به خاطر بسپار
+        </label>
     </div>
 
     <button type="submit">ورود</button>
 </form>
-
-<p>حساب نداری؟ <a href="{{ route('register') }}">ثبت‌نام</a></p>
-</body>
-</html>

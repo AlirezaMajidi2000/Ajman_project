@@ -17,23 +17,26 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9_]+$/'],
+            'national_code' => ['required', 'string', 'size:10', 'regex:/^\d{10}$/', 'unique:users'],
+            'phone' => ['required', 'string', 'size:11', 'regex:/^09\d{9}$/', 'unique:users'],
+            'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $user = \App\Models\User::create([
             'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => $validated['password'],
-            'role' => 'applicant',
+            'username' => $validated['username'],
+            'national_code' => $validated['national_code'],
+            'phone' => $validated['phone'],
+            'email' => null,
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
         ]);
 
-        Auth::login($user);
+        \Illuminate\Support\Facades\Auth::login($user);
 
         return redirect()->route('dashboard');
     }
-
 
     public function showLogin()
     {
@@ -44,24 +47,18 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        if (\Illuminate\Support\Facades\Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-
-
-            if (Auth::user()->role === 'admin') {
-                return redirect()->route('admin.dashboard');
-            }
-
-            return redirect()->route('dashboard');
+            return redirect()->intended(route('dashboard'));
         }
 
         return back()->withErrors([
-            'email' => 'ایمیل یا رمز عبور اشتباه است.',
-        ])->onlyInput('email');
+            'username' => 'نام کاربری یا رمز عبور اشتباه است.',
+        ])->onlyInput('username');
     }
 
     public function logout(Request $request)
