@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fa-IR" dir="rtl">
 <head>
@@ -7,103 +6,89 @@
 
     <title>ورود به حساب کاربری | آژمان</title>
 
-    <link rel="stylesheet" href="assets/css/login.css">
-
-    <link rel="stylesheet" href="assets/icon/FontAwesome.Pro.6.5.2/css/all.css">
-
-    <link rel="icon" type="image/png" href="assets/images/logo.jpg"/>
-
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/icon/FontAwesome.Pro.6.5.2/css/all.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.jpg') }}"/>
 </head>
 
 <body class="font_vazir">
 
-    <main class="login_page">
+<main class="login_page">
 
-        <section class="login_card">
+    <section class="login_card">
 
-            <header class="login_header">
-                <div class="login_logo"></div>
+        <header class="login_header">
+            <div class="login_logo"></div>
+            <h1 class="login_title">شتابدهنده آژمان</h1>
+            <p class="login_subtitle">
+                برای ورود به حساب کاربری خود اطلاعات زیر را وارد کنید.
+            </p>
+        </header>
 
-                <h1 class="login_title">شتابدهنده آژمان</h1>
+        @if($errors->any())
+            <div class="login_message" style="display:block; color:red; margin-bottom:1rem;">
+                {{ $errors->first() }}
+            </div>
+        @endif
 
-                <p class="login_subtitle">
-                    برای ورود به حساب کاربری خود اطلاعات زیر را وارد کنید.
-                </p>
-            </header>
+        <form class="login_form" id="loginForm" action="{{ route('login.store') }}" method="POST" novalidate>
+            @csrf
 
-            <form class="login_form" id="loginForm" novalidate>
-
-                <div class="login_group">
-                    <label for="username">نام کاربری</label>
-
-                    <div class="login_input_box">
-                        <i class="fa-regular fa-user"></i>
-
-                        <input
+            <div class="login_group">
+                <label for="username">نام کاربری</label>
+                <div class="login_input_box">
+                    <i class="fa-regular fa-user"></i>
+                    <input
                             type="text"
                             id="username"
                             name="username"
+                            value="{{ old('username') }}"
                             placeholder="نام کاربری خود را وارد کنید"
                             autocomplete="username"
-                        >
-                    </div>
-
-                    <small class="username_msg d-none"></small>
+                            required
+                    >
                 </div>
+            </div>
 
-                <div class="login_group">
-                    <label for="password">رمز عبور</label>
-
-                    <div class="login_input_box">
-                        <i class="fa-regular fa-lock"></i>
-
-                        <input
+            <div class="login_group">
+                <label for="password">رمز عبور</label>
+                <div class="login_input_box">
+                    <i class="fa-regular fa-lock"></i>
+                    <input
                             type="password"
                             id="password"
                             name="password"
                             placeholder="رمز عبور خود را وارد کنید"
                             autocomplete="current-password"
-                        >
-
-                        <button
-                            type="button"
-                            class="toggle_password"
-                            id="togglePassword"
-                            aria-label="نمایش رمز عبور"
-                        >
-                            <i class="fa-regular fa-eye"></i>
-                        </button>
-                    </div>
-
-                    <small class="password_msg d-none"></small>
+                            required
+                    >
+                    <button type="button" class="toggle_password" id="togglePassword" aria-label="نمایش رمز عبور">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
                 </div>
+            </div>
 
-                <div class="login_message d-none"
-                    id="loginMessage"
-                    role="alert"></div>
+            <button type="submit" class="login_button">
+                <span>ورود به حساب</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </form>
 
-                <button type="submit" class="login_button">
-                    <span>ورود به حساب</span>
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
+        <footer class="login_footer">
+            <span>سامانهٔ کارآموزی</span>
+            <span class="footer_dot"></span>
+            <span>آژمان</span>
+        </footer>
 
-            </form>
+    </section>
 
-            <footer class="login_footer">
-                <span>سامانهٔ کارآموزی</span>
-                <span class="footer_dot"></span>
-                <span>آژمان</span>
-            </footer>
+    <p class="copyright">
+        © تمامی حقوق متعلق به شتابدهنده آژمان است.
+    </p>
 
-        </section>
+</main>
 
-        <p class="copyright">
-            © تمامی حقوق متعلق به شتابدهنده آژمان است.
-        </p>
-
-    </main>
-
-    <script src="assets/js/login.js"></script>
+<script src="{{ asset('assets/js/login.js') }}"></script>
 
 </body>
 </html>

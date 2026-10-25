@@ -12,11 +12,12 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
-        'username',
+        'last_name',
         'national_code',
         'phone',
-        'email',
+        'username',
         'password',
+        'role',
     ];
 
     protected $hidden = [
@@ -27,4 +28,14 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function info()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
+
+    public function professionalInfo()
+    {
+        return $this->hasOne(ProfessionalInfo::class);
+    }
 }

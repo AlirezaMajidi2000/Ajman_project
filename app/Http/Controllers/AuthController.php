@@ -17,23 +17,43 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9_]+$/'],
-            'national_code' => ['required', 'string', 'size:10', 'regex:/^\d{10}$/', 'unique:users'],
-            'phone' => ['required', 'string', 'size:11', 'regex:/^09\d{9}$/', 'unique:users'],
-            'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
+            // users
+            'name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'national_code' => 'required|string|size:10|unique:users,national_code',
+            'phone' => 'required|string|size:11|unique:users,phone',
+            'username' => 'required|string|max:255|unique:users,username|alpha_dash',
+            'password' => 'required|string|min:6|confirmed',
+
+            // user_infos
+            'birth_date' => 'required|string|max:10',
+            'province' => 'required|string',
+            'city' => 'required|string',
+            'education_status' => 'required|string',
+            'field_of_study' => 'required|string|max:50',
+            'requested_field' => 'required|string',
         ]);
 
-        $user = \App\Models\User::create([
+        $user = User::create([
             'name' => $validated['name'],
-            'username' => $validated['username'],
+            'last_name' => $validated['last_name'],
             'national_code' => $validated['national_code'],
             'phone' => $validated['phone'],
-            'email' => null,
-            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+            'username' => $validated['username'],
+            'password' => $validated['password'],
+            'role' => 'applicant',
         ]);
 
-        \Illuminate\Support\Facades\Auth::login($user);
+        $user->info()->create([
+            'birth_date' => $validated['birth_date'],
+            'province' => $validated['province'],
+            'city' => $validated['city'],
+            'education_status' => $validated['education_status'],
+            'field_of_study' => $validated['field_of_study'],
+            'requested_field' => $validated['requested_field'],
+        ]);
+
+        Auth::login($user);
 
         return redirect()->route('dashboard');
     }
@@ -43,6 +63,19 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function dashboard()
+    {
+        return view('dashboard');
+    }
+
+    public function adminDashboard()
+    {
+        if (Auth::user()->role !== 'admin') {
+            abort(403, 'دسترسی غیرمجاز');
+        }
+
+        return view('admin.dashboard');
+    }
 
     public function login(Request $request)
     {
@@ -51,9 +84,14 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (\Illuminate\Support\Facades\Auth::attempt($credentials, $request->boolean('remember'))) {
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('dashboard'));
+
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
+
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([
