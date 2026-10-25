@@ -1,0 +1,5 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/php:8.2",
+    "postCreateCommand": "composer install",
+    "forwardPorts": [8000]
+}
