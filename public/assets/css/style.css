@@ -1,0 +1,120 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Font */
+@font-face {
+    font-family: 'vazir';
+    src: url('../font/Vazir.ttf');
+}
+
+.font_vazir {
+    font-family: 'vazir', sans-serif;
+}
+
+/* Start Header */
+.header {
+    background-image: url('../images/enter.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    transition: transform 0.7s ease, opacity 0.7s ease;
+}
+
+.header_box {
+    position: absolute;
+    bottom: 15%;
+
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.hide {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.btn_start,.btn_enter {
+    background-color: #118EB7;
+    color: #fff;
+
+    width: 144px;
+    min-height: 44px;
+    padding: 8px 12px;
+    margin: 0px 10px;
+
+    border: 2px solid #118EB7;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+    transition: outline 0.2s ease, background-color 0.2s ease;
+
+    text-decoration: none;
+}
+
+.btn_start:hover,.btn_enter:hover {
+    outline: 3px solid #118EB7;
+    outline-offset: 2px;
+}
+
+.btn_start:focus-visible,.btn_enter:focus-visible {
+    outline: 3px solid #118EB7;
+    outline-offset: 4px;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .header_box {
+        bottom: 12%;
+        padding: 0 16px;
+    }
+
+    .btn_start {
+        width: 140px;
+        min-height: 44px;
+        font-size: 17px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+    .header_box {
+        bottom: 14%;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .header,
+    .btn_start {
+        transition: none;
+    }
+}

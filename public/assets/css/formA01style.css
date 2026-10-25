@@ -1,0 +1,724 @@
+
+/* =========================
+   فونت و تنظیمات عمومی
+========================= */
+
+@font-face {
+    font-family: Vazir;
+    src: url("../font/Vazir.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+:root {
+    --primary: #118EB7;
+    --primary-dark: #0C7193;
+    --primary-light: #E8F6FA;
+    --primary-border: #B9E2EE;
+
+    --text: #243746;
+    --muted: #718096;
+    --border: #DCE5EB;
+    --background: #F3F7FA;
+    --white: #FFFFFF;
+
+    --danger: #DC3545;
+    --success: #198754;
+
+    --radius: 10px;
+    --shadow: 0 8px 28px rgba(25, 65, 85, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    direction: rtl;
+}
+
+body.font_vazir {
+    margin: 0;
+    padding: 30px 18px 45px;
+    background: var(--background);
+    color: var(--text);
+    font-family: Vazir, Tahoma, sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+select {
+    cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid rgba(17, 142, 183, 0.2);
+    outline-offset: 2px;
+}
+
+.d-none {
+    display: none !important;
+}
+
+/* =========================
+   عنوان فرم
+========================= */
+
+.register_title_box {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto 22px;
+    padding: 20px;
+    text-align: center;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 5px solid var(--primary);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.register_title {
+    margin: 0;
+    color: var(--primary-dark);
+    font-size: 25px;
+    font-weight: 800;
+}
+
+/* =========================
+   بدنه فرم
+========================= */
+
+form {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 28px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+}
+
+.items_box {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* =========================
+   اطلاعات شخصی
+========================= */
+
+.personal_box {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+.personal_box_left,
+.personal_box_right {
+    min-width: 0;
+}
+
+.personal_table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 10px 0;
+    margin: 0 -10px;
+}
+
+.personal_table td {
+    width: 50%;
+    padding: 0 0 14px;
+    vertical-align: top;
+}
+
+.input_group,
+.input_group2,
+.form_group,
+.form_group2,
+.form_group3 {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.input_group label,
+.input_group2 label,
+.form_group label,
+.form_group2 label,
+.form_group3 label,
+.date-picker > label {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.label_box {
+    display: block;
+}
+
+/* =========================
+   ورودی‌ها و فهرست‌ها
+========================= */
+
+input[type="text"],
+select {
+    width: 100%;
+    min-width: 0;
+    height: 45px;
+    padding: 9px 12px;
+    color: var(--text);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]::placeholder {
+    color: #A0ACB7;
+    font-size: 12px;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(17, 142, 183, 0.1);
+    outline: none;
+}
+
+select:disabled {
+    cursor: not-allowed;
+    color: #929EAA;
+    background: #F0F3F5;
+}
+
+/* پیام‌های اعتبارسنجی */
+
+small {
+    display: block;
+    min-height: 0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+small:not(.d-none):empty {
+    display: none;
+}
+
+.text-red {
+    color: var(--danger);
+}
+
+.text-green {
+    color: var(--success);
+}
+
+/* =========================
+   تاریخ تولد و تقویم
+========================= */
+
+.date-picker {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    z-index: 5;
+}
+
+.date-input {
+    display: flex;
+    align-items: stretch;
+    width: 97%;
+}
+
+.date-input input {
+    flex: 1;
+    width: 0;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+}
+
+.date-input button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 47px;
+    min-width: 47px;
+    color: var(--white);
+    background: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 8px 0 0 8px;
+    font-size: 18px;
+    transition: background 0.2s ease;
+}
+
+.date-input button:hover {
+    background: var(--primary-dark);
+}
+
+.calendar {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 300px;
+    max-width: calc(100vw - 40px);
+    padding: 14px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 12px 35px rgba(22, 50, 65, 0.18);
+    z-index: 20;
+}
+
+
+/* نمایش تقویم هنگام باز شدن */
+.calendar.show {
+    display: block;
+}
+
+/* نام روزهای هفته */
+.calendar-grid .weekday {
+    padding: 5px 0;
+    color: var(--primary-dark);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* روزهای تقویم */
+.calendar-grid .day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 33px;
+    padding: 4px 0;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* حالت هاور روز */
+.calendar-grid .day:not(.disabled):hover {
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    border-color: var(--primary-border);
+}
+
+/* تاریخ امروز */
+.calendar-grid .day.today {
+    border-color: var(--primary);
+    font-weight: 700;
+}
+
+/* تاریخ انتخاب‌شده */
+.calendar-grid .day.selected {
+    color: #fff;
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+/* روزهای آینده */
+.calendar-grid .day.disabled {
+    color: #BCC5CC;
+    cursor: not-allowed;
+}
+
+/* انتخاب ماه و سال */
+.calendar-selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.calendar-selectors select {
+    width: 100%;
+}
+
+.calendar-selectors button {
+    min-height: 38px;
+    color: #fff;
+    background: var(--primary);
+    border: 0;
+    border-radius: 7px;
+}
+
+.calendar-selectors button:hover {
+    background: var(--primary-dark);
+}
+
+
+/*
+   اگر JavaScript با تغییر display یا کلاس دیگری
+   تقویم را باز می‌کند، این بخش را مطابق همان منطق تنظیم کن.
+   کلاس‌ها و شناسه‌های تقویم تغییری نکرده‌اند.
+*/
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.calendar-header button {
+    min-width: 34px;
+    height: 34px;
+    padding: 4px 8px;
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    border: 1px solid var(--primary-border);
+    border-radius: 7px;
+}
+
+.calendar-header button:hover {
+    color: var(--white);
+    background: var(--primary);
+}
+
+.calendar-header .month-year-btn {
+    flex: 1;
+    font-weight: 700;
+    font-family: inherit;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+    text-align: center;
+}
+
+.calendar-grid button {
+    min-width: 0;
+    min-height: 33px;
+    padding: 4px 0;
+    color: var(--text);
+    background: var(--white);
+    border: 1px solid transparent;
+    border-radius: 6px;
+}
+
+.calendar-grid button:hover {
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    border-color: var(--primary-border);
+}
+
+/* =========================
+   استان و شهرستان
+========================= */
+
+.items_box2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+.items_box3,
+.items_box4,
+.location_section {
+    width: 100%;
+    min-width: 0;
+}
+
+.midle_box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.location_table2{
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 10px 0;
+    margin: 0 -10px;
+    /* background-color: red; */
+}
+
+.education_table{
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 10px 0;
+    margin: 0 -10px;
+    /* background-color: green; */
+}
+
+.location_table2 td,
+.education_table td {
+    width: 50%;
+    padding: 0;
+    vertical-align: top;
+}
+
+.location_fields {
+    width: 100%;
+    min-width: 0;
+}
+
+.location_fields .form_group {
+    width: 100%;
+}
+
+/* =========================
+   حوزه مورد درخواست
+========================= */
+
+.form_group3 {
+    width: 96%;
+    max-width: 520px;
+}
+
+/* =========================
+   دکمه ارسال
+========================= */
+
+.btn_box {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 1050px;
+    margin: 20px auto 0;
+    padding: 0px 20px;
+}
+
+.btn_submit {
+    min-width: 150px;
+    padding: 11px 28px;
+    color: var(--white);
+    background: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(17, 142, 183, 0.18);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn_submit:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn_submit:active {
+    transform: translateY(0);
+}
+
+/* نام کاربری و رمز عبور */
+.login_fields_box {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+    margin-top: 28px;
+    font-family: inherit;
+}
+
+.login_field_group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.login_field_group > label {
+    color: #263746;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.login_input_wrapper {
+    display: flex;
+    align-items: center;
+    width: 95%;
+    gap: 12px;
+    min-width: 0;
+    height: 52px;
+    padding: 0 16px;
+    background-color: #fff;
+    border: 1px solid #dce5e9;
+    border-radius: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.login_input_wrapper:focus-within {
+    border-color: #118EB7;
+    box-shadow: 0 0 0 3px rgba(17, 142, 183, 0.12);
+}
+
+.login_field_icon {
+    flex-shrink: 0;
+    color: #118EB7;
+    font-size: 17px;
+}
+
+.login_input_wrapper input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #263746;
+    font-family: inherit;
+    font-size: 14px;
+    box-shadow: none;
+}
+
+.login_input_wrapper input::placeholder {
+    color: #9aa9b2;
+    opacity: 1;
+}
+
+.login_password_toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #81919a;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login_password_toggle:hover {
+    color: #118EB7;
+}
+
+.login_input_wrapper input:focus,
+.login_input_wrapper input:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 600px) {
+    .login_fields_box {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+}
+
+
+/* =========================
+   واکنش‌گرایی
+========================= */
+
+@media (max-width: 800px) {
+    body.font_vazir {
+        padding: 20px 12px 30px;
+    }
+
+    form {
+        padding: 22px 18px;
+    }
+
+    .personal_box {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .items_box2 {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .date-picker {
+        max-width: 100%;
+    }
+
+    .form_group3 {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    body.font_vazir {
+        padding: 12px 8px 24px;
+        font-size: 13px;
+    }
+
+    .register_title_box {
+        margin-bottom: 14px;
+        padding: 15px 10px;
+    }
+
+    .register_title {
+        font-size: 21px;
+    }
+
+    form {
+        padding: 16px 12px;
+        border-radius: 10px;
+    }
+
+    .personal_table,
+    .location_table,
+    .education_table {
+        border-spacing: 6px 0;
+        margin: 0 -6px;
+    }
+
+    .personal_table td {
+        padding-bottom: 12px;
+    }
+
+    input[type="text"],
+    select {
+        height: 43px;
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    input[type="text"]::placeholder {
+        font-size: 10px;
+    }
+
+    .calendar {
+        width: 280px;
+    }
+
+    .btn_box {
+        margin-top: 16px;
+    }
+
+    .btn_submit {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
