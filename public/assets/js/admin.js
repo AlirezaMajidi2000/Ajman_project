@@ -178,23 +178,38 @@ async function openScheduleModal(id) {
     modalContent.innerHTML = `
         <form id="scheduleForm">
             <div style="margin-bottom: 1rem;">
-                <label>تاریخ مصاحبه</label>
-                <input type="text" name="interview_date" value="${app.interviewDate || ''}" placeholder="1405/08/02" required style="width:100%; padding:0.5rem;">
-            </div>
-            <div style="margin-bottom: 1rem;">
                 <label>وضعیت</label>
-                <select name="status" style="width:100%; padding:0.5rem;">
+                <select name="status" id="statusSelect" style="width:100%; padding:0.5rem;">
                     <option value="pending" ${app.status === 'pending' ? 'selected' : ''}>در انتظار</option>
                     <option value="invited" ${app.status === 'invited' ? 'selected' : ''}>دعوت به مصاحبه</option>
                     <option value="accepted" ${app.status === 'accepted' ? 'selected' : ''}>قبول</option>
                     <option value="rejected" ${app.status === 'rejected' ? 'selected' : ''}>رد</option>
                 </select>
             </div>
+            <div style="margin-bottom: 1rem;" id="interviewDateField">
+                <label>تاریخ مصاحبه</label>
+                <input type="text" name="interview_date" value="${app.interviewDate || ''}" placeholder="1405/08/02" style="width:100%; padding:0.5rem;">
+            </div>
             <button type="submit" class="btn btn-primary">ذخیره</button>
         </form>
     `;
 
     modalBackdrop.hidden = false;
+
+    const statusSelect = document.getElementById('statusSelect');
+    const dateField = document.getElementById('interviewDateField');
+
+    // نمایش/مخفی کردن فیلد تاریخ بر اساس وضعیت
+    function toggleDateField() {
+        if (statusSelect.value === 'invited') {
+            dateField.style.display = 'block';
+        } else {
+            dateField.style.display = 'none';
+        }
+    }
+
+    toggleDateField();
+    statusSelect.addEventListener('change', toggleDateField);
 
     document.getElementById('scheduleForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -207,7 +222,7 @@ async function openScheduleModal(id) {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
             },
             body: JSON.stringify({
-                interview_date: data.get('interview_date'),
+                interview_date: data.get('interview_date') || null,
                 status: data.get('status'),
             }),
         });
@@ -215,10 +230,12 @@ async function openScheduleModal(id) {
         if (res.ok) {
             modalBackdrop.hidden = true;
             await loadApplications();
+        } else {
+            const err = await res.json();
+            alert(err.errors?.interview_date?.[0] || 'خطا در ذخیره');
         }
     });
 }
-
 // --- حذف درخواست ---
 async function deleteApplication(id) {
     if (!confirm('آیا از حذف مطمئن هستید؟')) return;

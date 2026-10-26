@@ -75,19 +75,27 @@ class ApplicationController extends Controller
         return response()->json($applicants);
     }
 
+
     public function schedule(Request $request, User $user)
     {
         abort_if($user->role !== 'applicant', 404);
 
         $validated = $request->validate([
-            'interview_date' => 'required|string',
+            'interview_date' => 'nullable|string|max:20',
             'status' => 'required|string|in:pending,invited,accepted,rejected',
         ]);
+
+        if ($validated['status'] === 'invited' && empty($validated['interview_date'])) {
+            return response()->json([
+                'errors' => ['interview_date' => ['برای دعوت به مصاحبه، تاریخ الزامی است.']]
+            ], 422);
+        }
+
 
         $user->professionalInfo()->updateOrCreate(
             ['user_id' => $user->id],
             [
-                'interview_date' => $validated['interview_date'],
+                'interview_date' => $validated['interview_date'] ?? null,
                 'status' => $validated['status'],
             ]
         );
